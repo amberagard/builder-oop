@@ -1,0 +1,11 @@
+extends ../shared/template
+
+block content
+    h1 Builder II
+
+    #controls
+        input#username(type='text', autofocus=true, placeholder='Username')
+        button#login Login
+
+block scripts
+    script(src='/js/es6/compiled/game.js')

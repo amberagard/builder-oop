@@ -1,0 +1,14 @@
+extends ../shared/template
+
+block content
+    h1 Builder II
+
+    #controls
+        input#username(type='text', autofocus=true, placeholder='Username')
+        button#login.button.button-rounded.button-action Login
+
+    #dashboard
+    #forest
+
+block scripts
+    script(src='/js/es6/compiled/game.js')
