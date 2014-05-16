@@ -1,7 +1,6 @@
 'use strict';
 
 var trees = global.nss.db.collection('trees');
-var users = global.nss.db.collection('users');
 var Mongo = require('mongodb');
 var _ = require('lodash');
 
@@ -18,17 +17,37 @@ class Tree {
     }
 
     grow() {
-        if(this.height !== 'chopped'){
-            this.height += _.random(0,2);
-            this.isHealthy = _.random(0,200) !== 71;
-        }
+        var max = this.isAdult ? this.height * 0.10 : 2;
+        this.height += _.random(0, max, true);
+
+        var min = this.isAdult ? 200 - ((this.height/12)*0.10) : 200;
+        min = min < 10 ? 10 : min;
+
+        var rnd = _.random(0, min, true);
+        this.isHealthy = rnd > 1;
     }
 
-    chop(fn) {
-        if(this.height >= 24) {
-            this.height = 'chopped';
-            this.isChopped = true;
-        }
+    chop(user) {
+        user.wood += this.height / 2;
+        this.height = 0;
+        this.isHealthy = false;
+        this.isChopped = true;
+    }
+
+    get isAdult() {
+        return this.height >= 48;
+    }
+
+    get isGrowable() {
+        return this.isHealthy && !this.isBeanStalk;
+    }
+
+    get isChoppable() {
+        return this.isAdult && this.isHealthy && !this.isBeanStalk;
+    }
+
+    get isBeanStalk() {
+        return (this.height / 12) >= 10000;
     }
 
     getClass() {
@@ -36,9 +55,9 @@ class Tree {
 
         if(this.height === 0) {
             classes.push('seed');
-        } else if(this.height < 12) {
-            classes.push('sapling');
         } else if(this.height < 24) {
+            classes.push('sapling');
+        } else if(!this.isAdult) {
             classes.push('treenager');
         } else {
             classes.push('adult');
@@ -46,14 +65,19 @@ class Tree {
 
         if(!this.isHealthy) {
             classes.push('dead');
+        } else {
+            classes.push('alive');
         }
 
         if(this.isChopped) {
             classes.push('chopped');
         }
 
-        return classes.join(' ');
+        if(this.isBeanStalk) {
+            classes.push('beanstalk');
+        }
 
+        return classes.join(' ');
     }
 
     static findByTreeId(treeId, fn) {
@@ -66,11 +90,9 @@ class Tree {
 
     static plant(userId, fn) {
         userId = Mongo.ObjectID(userId);
-        users.findOne({_id:userId}, (e, user)=>{
-            var tree = new Tree(userId);
-            trees.save(tree, ()=>fn(tree));
-        });
-
+        // users.findOne({_id:userId}, (e, user)=>{
+        var tree = new Tree(userId);
+        trees.save(tree, ()=>fn(tree));
     }
 
     static findAllByUserId(userId, fn) {
@@ -80,7 +102,6 @@ class Tree {
             fn(forest);
         });
     }
-
 }
 
 module.exports = Tree;

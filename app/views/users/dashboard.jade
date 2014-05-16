@@ -1,6 +1,10 @@
-#user(data-id=user._id.toString())= user.username
-#wood= user.wood
-#cash= user.cash
+#user(data-id=user._id.toString()) User: #{user.username}
+#wood Wood: #{user.wood.toFixed(2)}
+#cash Cash $#{user.cash.toFixed(2)}
 button#plant.button.button-rounded.button-action Plant Seed
 button#getforest.button.button-rounded.button-action Get Forest
 button#exchange.button.button-rounded.button-action Exchange Wood for $$$
+input#wood-amt(type='text', placeholder= 'Wood Amount')
+
+if(user.isAutoGrowAvailable)
+    button#autogrow.button.button-rounded.button-action Purchase Auto Grow
