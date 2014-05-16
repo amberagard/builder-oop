@@ -1,3 +1,21 @@
+var audioChop,
+    audioBeanStalk,
+    audioDead;
+function ajax(url, type) {
+  'use strict';
+  var data = arguments[2] !== (void 0) ? arguments[2] : {};
+  var success = arguments[3] !== (void 0) ? arguments[3] : (function(r) {
+    return console.log(r);
+  });
+  var dataType = arguments[4] !== (void 0) ? arguments[4] : 'html';
+  $.ajax({
+    url: url,
+    type: type,
+    dataType: dataType,
+    data: data,
+    success: success
+  });
+}
 (function() {
   'use strict';
   $(document).ready(initialize);
@@ -8,18 +26,15 @@
     $('#forest').on('click', '.grow', grow);
     $('#forest').on('click', '.adult .chop', chop);
     $('#dashboard').on('click', '#exchange', exchange);
-    $('#dashboard').on('click', '#autogrow', autogrow);
+    $('#dashboard').on('click', '#purchase-autogrow', purchaseAutogrow);
     preloadAssests();
   }
-  function autogrow() {
+  function purchaseAutogrow() {
     var userId = $('#user').attr('data-id');
     ajax(("/users/" + userId + "/purchase/autogrow"), 'put', null, (function(h) {
       $('#dashboard').empty().append(h);
     }));
   }
-  var audioChop,
-      audioBeanStalk,
-      audioDead;
   function preloadAssests() {
     audioChop = $('<audio>')[0];
     audioChop.src = '/audios/chopping.mp3';
@@ -81,20 +96,6 @@
     ajax('/login', 'post', {username: username}, (function(h) {
       $('#dashboard').empty().append(h);
     }));
-  }
-  function ajax(url, type) {
-    var data = arguments[2] !== (void 0) ? arguments[2] : {};
-    var success = arguments[3] !== (void 0) ? arguments[3] : (function(r) {
-      return console.log(r);
-    });
-    var dataType = arguments[4] !== (void 0) ? arguments[4] : 'html';
-    $.ajax({
-      url: url,
-      type: type,
-      dataType: dataType,
-      data: data,
-      success: success
-    });
   }
 })();
 

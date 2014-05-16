@@ -1,6 +1,6 @@
 'use strict';
 
-var items = global.nss.db.collection('items');
+//var items = global.nss.db.collection('items');
 // var Mongo = require('mongodb');
 // var _ = require('lodash');
 
@@ -14,10 +14,6 @@ class Item {
             this.image = '/img/autogrow.gif';
             break;
         }
-    }
-
-    save(fn) {
-        items.save(this, ()=>fn());
     }
 }
 

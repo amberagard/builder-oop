@@ -50,7 +50,7 @@ class Tree {
         return (this.height / 12) >= 10000;
     }
 
-    getClass() {
+    get classes() {
         var classes = [];
 
         if(this.height === 0) {

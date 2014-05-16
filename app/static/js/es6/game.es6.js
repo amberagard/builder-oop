@@ -1,5 +1,19 @@
 /* jshint unused:false */
 
+var audioChop, audioBeanStalk, audioDead;
+
+function ajax(url, type, data={}, success=r=>console.log(r), dataType='html') {
+    'use strict';
+    $.ajax({
+        url:url,
+        type:type,
+        dataType:dataType,
+        data:data,
+        success:success
+    });
+}
+
+
 (function() {
     'use strict';
 
@@ -12,18 +26,16 @@
         $('#forest').on('click', '.grow', grow);
         $('#forest').on('click', '.adult .chop', chop);
         $('#dashboard').on('click', '#exchange', exchange);
-        $('#dashboard').on('click', '#autogrow', autogrow);
+        $('#dashboard').on('click', '#purchase-autogrow', purchaseAutogrow);
         preloadAssests();
     }
 
-    function autogrow() {
+    function purchaseAutogrow() {
         var userId = $('#user').attr('data-id');
         ajax(`/users/${userId}/purchase/autogrow`, 'put', null, h=>{
             $('#dashboard').empty().append(h);
         });
     }
-
-    var audioChop, audioBeanStalk, audioDead;
 
     function preloadAssests() {
         audioChop = $('<audio>')[0];
@@ -73,7 +85,7 @@
             $('#dashboard').empty().append(h);
         });
     }
-    
+
     function forest() {
         var userId = $('#user').attr('data-id');
         ajax(`/trees?userId=${userId}`, 'get', null, h=>{
@@ -94,17 +106,4 @@
             $('#dashboard').empty().append(h);
         });
     }
-
-    function ajax(url, type, data={}, success=r=>console.log(r), dataType='html') {
-        $.ajax({
-            url:url,
-            type:type,
-            dataType:dataType,
-            data:data,
-            success:success
-        });
-    }
-
-
-
 })();
