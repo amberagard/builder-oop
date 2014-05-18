@@ -33,3 +33,9 @@ exports.chop = (req, res)=>{
 
     });
 };
+
+exports.root = (req, res)=>{
+    Tree.deleteByTreeId(req.params.treeId, tree=>{
+        res.render('trees/tree', {tree:tree});
+    });
+};

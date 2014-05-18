@@ -12,17 +12,6 @@
     var isOn = false;
     var timer;
 
-    // function slider() {
-    //     $('#slider-connect').noUiSlider({
-    //         start: 0,
-    //         connect: 'lower',
-    //         range: {
-    //           'min': 0,
-    //           'max': 1000
-    //          }
-    //      });
-    // }
-
     function seed() {
         isOn = !isOn;
         $('#autoseed').toggleClass('on');

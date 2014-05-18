@@ -2,11 +2,11 @@
   'use strict';
   initialize();
   function initialize() {
-    $('#autoroot').click(root);
+    $('#autoroot').click(rootin);
   }
   var isOn = false;
   var timer;
-  function root() {
+  function rootin() {
     isOn = !isOn;
     $('#autoroot').toggleClass('on');
     if (isOn) {
@@ -20,10 +20,15 @@
     timer = setInterval(rooting, 1000);
   }
   function rooting() {
-    var trees = $('.alive:not(.beanstalk)').length;
-    if (trees < 50) {
-      plant();
-    }
+    $('.dead').map((function(i, d) {
+      return $(d).attr('data-id');
+    })).each((function(i, v) {
+      var tree = $((".tree[data-id=" + v + "]"));
+      ajax(("/trees/" + v + "/root"), 'put', null, (function(h) {
+        console.log(h);
+      }));
+      tree.remove();
+    }));
   }
 })();
 

@@ -80,6 +80,13 @@ class Tree {
         return classes.join(' ');
     }
 
+    static deleteByTreeId(treeId, fn) {
+        treeId = Mongo.ObjectID(treeId);
+        trees.remove({_id:treeId}, (e, tree)=>{
+            fn(tree);
+        });
+    }
+
     static findByTreeId(treeId, fn) {
         treeId = Mongo.ObjectID(treeId);
         trees.findOne({_id:treeId}, (e, tree)=>{

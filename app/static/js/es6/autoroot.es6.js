@@ -1,17 +1,18 @@
-/* global plant */
+/* global ajax */
+
 (function() {
     'use strict';
 
     initialize();
 
     function initialize() {
-        $('#autoroot').click(root);
+        $('#autoroot').click(rootin);
     }
 
     var isOn = false;
     var timer;
 
-    function root() {
+    function rootin() {
         isOn = !isOn;
         $('#autoroot').toggleClass('on');
 
@@ -28,11 +29,13 @@
     }
 
     function rooting() {
-        var trees = $('.alive:not(.beanstalk)').length;
-        if(trees < 50) {
-            plant();
-        }
-
+        $('.dead').map((i,d)=>$(d).attr('data-id')).each((i,v)=>{
+                var tree = $(`.tree[data-id=${v}]`);
+                ajax(`/trees/${v}/root`, 'put', null, h=> {
+                    console.log(h);
+                });
+                tree.remove();
+        });
     }
 
 

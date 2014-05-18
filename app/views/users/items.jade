@@ -1,6 +1,5 @@
-//#user(data-id=user._id.toString()) User: #{user.username}
-
 #items
+    h3 Purchases
     each item in user.items
         case item.type
             when 'autogrow'
@@ -10,7 +9,5 @@
             when 'autoroot'
                 include ../items/autoroot
 
-#slider-connect
 
-//- block scripts
-//-     script(src='jquery.nouislider.js')
+#slider-connect

@@ -21,6 +21,16 @@ function plant() {
     });
 }
 
+function root() {
+    'use strict';
+    var tree = $(this).closest('.tree');
+    var treeId = tree.attr('data-id');
+    ajax(`/trees/${treeId}/root`, 'put', null, h=>{
+        $('#forest').append(h);
+    });
+    tree.remove();
+}
+
 (function() {
     'use strict';
 
@@ -35,6 +45,8 @@ function plant() {
         $('#dashboard').on('click', '#exchange', exchange);
         $('#dashboard').on('click', '#purchase-autogrow', purchaseAutogrow);
         $('#dashboard').on('click', '#purchase-autoseed', purchaseAutoseed);
+        $('#dashboard').on('click', '#purchase-autoroot', purchaseAutoroot);
+        $('#forest').on('click', '.dead', root);
         preloadAssests();
     }
 
@@ -42,6 +54,14 @@ function plant() {
         var userId = $('#user').attr('data-id');
         ajax(`/items?userId=${userId}`, 'get', null, h=>{
             $('#items-item').empty().append(h);
+        });
+    }
+
+    function purchaseAutoroot() {
+        var userId = $('#user').attr('data-id');
+        ajax(`/users/${userId}/purchase/autoroot`, 'put', null, h=>{
+            $('#dashboard').empty().append(h);
+            items();
         });
     }
 

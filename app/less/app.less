@@ -31,52 +31,41 @@ h1 {
     box-shadow: 3px 3px 7px black;
 }
 
-.seed {
-    background-image: url('/img/seed.png');
+.seed, .sapling, .treenager, .adult, .beanstalk, .dead {
     padding: 10px;
-    background-size: 40%;
     background-repeat: no-repeat;
     background-position: center center;
+}
+
+.seed {
+    background-image: url('/img/seed.png');
+    background-size: 40%;
 }
 
 .sapling {
     background-image: url('/img/sapling.png');
-    padding: 10px;
     background-size: 75%;
-    background-repeat: no-repeat;
-    background-position: center center;
 }
 
 .treenager {
     background-image: url('/img/treenager.png');
-    padding: 10px;
     background-size: 65%;
-    background-repeat: no-repeat;
-    background-position: center center;
+
 }
 
 .adult {
     background-image: url('/img/adult.png');
-    padding: 10px;
     background-size: 75%;
-    background-repeat: no-repeat;
-    background-position: center center;
 }
 
 .beanstalk {
     background-image: url('/img/beanstalk.png');
-    padding: 10px;
     background-size: 25%;
-    background-repeat: no-repeat;
-    background-position: center center;
 }
 
 .dead {
     background-image: url('/img/dead.png');
-    padding: 10px;
     background-size: 75%;
-    background-repeat: no-repeat;
-    background-position: center center;
 }
 
 .height {
@@ -85,7 +74,7 @@ h1 {
     color: black;
 }
 
-.grow {
+.grow, .root {
     position: relative;
     margin-top: 150px;
     margin-left: 20px;
@@ -108,9 +97,8 @@ h1 {
 }
 
 #items {
-    height: 75px;
+    height: 85px;
     width: 500px;
-    border: 1px solid #555555;
     padding: 10px;
     margin: auto;
     text-align: center;
@@ -125,12 +113,15 @@ h1 {
     background-size: cover;
     width: 50px;
     height: 50px;
-    //border: 1px solid black;
+    border: 1px solid black;
+    display: inline-block;
+    margin-right: 20px;
 }
 
 h3 {
     margin: auto;
     text-align: center;
+    margin-bottom: 10px;
 }
 
 #slider-connect {

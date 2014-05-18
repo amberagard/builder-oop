@@ -23,6 +23,15 @@ function plant() {
     $('#forest').append(h);
   }));
 }
+function root() {
+  'use strict';
+  var tree = $(this).closest('.tree');
+  var treeId = tree.attr('data-id');
+  ajax(("/trees/" + treeId + "/root"), 'put', null, (function(h) {
+    $('#forest').append(h);
+  }));
+  tree.remove();
+}
 (function() {
   'use strict';
   $(document).ready(initialize);
@@ -35,12 +44,21 @@ function plant() {
     $('#dashboard').on('click', '#exchange', exchange);
     $('#dashboard').on('click', '#purchase-autogrow', purchaseAutogrow);
     $('#dashboard').on('click', '#purchase-autoseed', purchaseAutoseed);
+    $('#dashboard').on('click', '#purchase-autoroot', purchaseAutoroot);
+    $('#forest').on('click', '.dead', root);
     preloadAssests();
   }
   function items() {
     var userId = $('#user').attr('data-id');
     ajax(("/items?userId=" + userId), 'get', null, (function(h) {
       $('#items-item').empty().append(h);
+    }));
+  }
+  function purchaseAutoroot() {
+    var userId = $('#user').attr('data-id');
+    ajax(("/users/" + userId + "/purchase/autoroot"), 'put', null, (function(h) {
+      $('#dashboard').empty().append(h);
+      items();
     }));
   }
   function purchaseAutoseed() {
