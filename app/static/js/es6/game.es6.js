@@ -47,6 +47,9 @@ function root() {
         $('#dashboard').on('click', '#purchase-autoseed', purchaseAutoseed);
         $('#dashboard').on('click', '#purchase-autoroot', purchaseAutoroot);
         $('#forest').on('click', '.dead', root);
+        $('#dashboard').on('click', '#purchase-basichouse', purchaseBasicHouse);
+        $('#dashboard').on('click', '#purchase-mansion', purchaseMansion);
+        $('#dashboard').on('click', '#purchase-castle', purchaseCastle);
         preloadAssests();
     }
 
@@ -54,6 +57,30 @@ function root() {
         var userId = $('#user').attr('data-id');
         ajax(`/items?userId=${userId}`, 'get', null, h=>{
             $('#items-item').empty().append(h);
+        });
+    }
+
+    function purchaseCastle() {
+        var userId = $('#user').attr('data-id');
+        ajax(`/users/${userId}/purchase/castle`, 'put', null, h=>{
+            $('#dashboard').empty().append(h);
+            items();
+        });
+    }
+
+    function purchaseMansion() {
+        var userId = $('#user').attr('data-id');
+        ajax(`/users/${userId}/purchase/mansion`, 'put', null, h=>{
+            $('#dashboard').empty().append(h);
+            items();
+        });
+    }
+
+    function purchaseBasicHouse() {
+        var userId = $('#user').attr('data-id');
+        ajax(`/users/${userId}/purchase/basichouse`, 'put', null, h=>{
+            $('#dashboard').empty().append(h);
+            items();
         });
     }
 
@@ -136,8 +163,6 @@ function root() {
             $('#forest').empty().append(h);
         });
     }
-
-
 
     function login() {
         var username = $('#username').val();

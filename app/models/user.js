@@ -31,6 +31,24 @@ class User {
         }
     }
 
+    get isCastleAvailable() {
+        var isPresent = _(this.items).any(i=>i.type === 'castle');
+
+        return (this.cash >= 1000000) && (!isPresent);
+    }
+
+    get isMansionAvailable() {
+        var isPresent = _(this.items).any(i=>i.type === 'mansion');
+
+        return (this.cash >= 500000) && (!isPresent);
+    }
+
+    get isBasicHouseAvailable() {
+        var isPresent = _(this.items).any(i=>i.type === 'basichouse');
+
+        return (this.cash >= 100000) && (!isPresent);
+    }
+
     get isAutoRootAvailable() {
         var isPresent = _(this.items).any(i=>i.type === 'autoroot');
 

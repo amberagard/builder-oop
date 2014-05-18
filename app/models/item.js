@@ -1,9 +1,5 @@
 'use strict';
 
-//var items = global.nss.db.collection('items');
-// var Mongo = require('mongodb');
-// var _ = require('lodash');
-
 class Item {
     constructor(type) {
         this.type = type;
@@ -20,6 +16,18 @@ class Item {
         case 'autoroot':
             this.cost = 85000;
             this.image = '/img/autoroot.gif';
+            break;
+        case 'basichouse':
+            this.cost = 100000;
+            this.image = '/img/basichouse.png';
+            break;
+        case 'mansion':
+            this.cost = 500000;
+            this.image = 'img/mansion.jpg';
+            break;
+        case 'castle':
+            this.cost = 1000000;
+            this.image = '/img/castle.jpg';
             break;
         }
     }
