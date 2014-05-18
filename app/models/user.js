@@ -31,14 +31,22 @@ class User {
         }
     }
 
+    get isAutoRootAvailable() {
+        var isPresent = _(this.items).any(i=>i.type === 'autoroot');
+
+        return (this.cash >= 85000) && (!isPresent);
+    }
+
+    get isAutoSeedAvailable() {
+        var isPresent = _(this.items).any(i=>i.type === 'autoseed');
+
+        return (this.cash >= 75000) && (!isPresent);
+    }
+
     get isAutoGrowAvailable() {
         var isPresent = _(this.items).any(i=>i.type === 'autogrow');
 
         return (this.cash >= 50000) && (!isPresent);
-
-        // if(user.isAutoGrowAvailable === false) {
-        //
-        // }
     }
 
     static login(username, fn) {

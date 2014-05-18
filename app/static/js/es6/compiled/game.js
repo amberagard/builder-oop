@@ -16,6 +16,13 @@ function ajax(url, type) {
     success: success
   });
 }
+function plant() {
+  'use strict';
+  var userId = $('#user').attr('data-id');
+  ajax('/trees/plant', 'post', {userId: userId}, (function(h) {
+    $('#forest').append(h);
+  }));
+}
 (function() {
   'use strict';
   $(document).ready(initialize);
@@ -27,12 +34,27 @@ function ajax(url, type) {
     $('#forest').on('click', '.adult .chop', chop);
     $('#dashboard').on('click', '#exchange', exchange);
     $('#dashboard').on('click', '#purchase-autogrow', purchaseAutogrow);
+    $('#dashboard').on('click', '#purchase-autoseed', purchaseAutoseed);
     preloadAssests();
+  }
+  function items() {
+    var userId = $('#user').attr('data-id');
+    ajax(("/items?userId=" + userId), 'get', null, (function(h) {
+      $('#items-item').empty().append(h);
+    }));
+  }
+  function purchaseAutoseed() {
+    var userId = $('#user').attr('data-id');
+    ajax(("/users/" + userId + "/purchase/autoseed"), 'put', null, (function(h) {
+      $('#dashboard').empty().append(h);
+      items();
+    }));
   }
   function purchaseAutogrow() {
     var userId = $('#user').attr('data-id');
     ajax(("/users/" + userId + "/purchase/autogrow"), 'put', null, (function(h) {
       $('#dashboard').empty().append(h);
+      items();
     }));
   }
   function preloadAssests() {
@@ -85,16 +107,12 @@ function ajax(url, type) {
       $('#forest').empty().append(h);
     }));
   }
-  function plant() {
-    var userId = $('#user').attr('data-id');
-    ajax('/trees/plant', 'post', {userId: userId}, (function(h) {
-      $('#forest').append(h);
-    }));
-  }
   function login() {
     var username = $('#username').val();
     ajax('/login', 'post', {username: username}, (function(h) {
       $('#dashboard').empty().append(h);
+      forest();
+      items();
     }));
   }
 })();

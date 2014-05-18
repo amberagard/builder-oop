@@ -13,6 +13,13 @@ function ajax(url, type, data={}, success=r=>console.log(r), dataType='html') {
     });
 }
 
+function plant() {
+    'use strict';
+    var userId = $('#user').attr('data-id');
+    ajax('/trees/plant', 'post', {userId:userId}, h=>{
+        $('#forest').append(h);
+    });
+}
 
 (function() {
     'use strict';
@@ -27,13 +34,30 @@ function ajax(url, type, data={}, success=r=>console.log(r), dataType='html') {
         $('#forest').on('click', '.adult .chop', chop);
         $('#dashboard').on('click', '#exchange', exchange);
         $('#dashboard').on('click', '#purchase-autogrow', purchaseAutogrow);
+        $('#dashboard').on('click', '#purchase-autoseed', purchaseAutoseed);
         preloadAssests();
+    }
+
+    function items() {
+        var userId = $('#user').attr('data-id');
+        ajax(`/items?userId=${userId}`, 'get', null, h=>{
+            $('#items-item').empty().append(h);
+        });
+    }
+
+    function purchaseAutoseed() {
+        var userId = $('#user').attr('data-id');
+        ajax(`/users/${userId}/purchase/autoseed`, 'put', null, h=>{
+            $('#dashboard').empty().append(h);
+            items();
+        });
     }
 
     function purchaseAutogrow() {
         var userId = $('#user').attr('data-id');
         ajax(`/users/${userId}/purchase/autogrow`, 'put', null, h=>{
             $('#dashboard').empty().append(h);
+            items();
         });
     }
 
@@ -93,17 +117,14 @@ function ajax(url, type, data={}, success=r=>console.log(r), dataType='html') {
         });
     }
 
-    function plant() {
-        var userId = $('#user').attr('data-id');
-        ajax('/trees/plant', 'post', {userId:userId}, h=>{
-            $('#forest').append(h);
-        });
-    }
+
 
     function login() {
         var username = $('#username').val();
         ajax('/login', 'post', {username:username}, h =>{
             $('#dashboard').empty().append(h);
+            forest();
+            items();
         });
     }
 })();

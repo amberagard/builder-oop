@@ -13,6 +13,14 @@ class Item {
             this.cost = 50000;
             this.image = '/img/autogrow.gif';
             break;
+        case 'autoseed':
+            this.cost = 75000;
+            this.image = '/img/autoseed.gif';
+            break;
+        case 'autoroot':
+            this.cost = 85000;
+            this.image = '/img/autoroot.gif';
+            break;
         }
     }
 }
